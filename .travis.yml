@@ -1,0 +1,96 @@
+language: vim
+
+cache:
+  directories:
+    - $HOME/.vim
+    - $HOME/.vimrc
+
+jobs:
+  include:
+    - name: "Vim 8.0 on Ubuntu"
+      os: linux
+      dist: focal
+      env: VIM_VERSION=8.0
+    - name: "Vim 8.2 on Ubuntu"
+      os: linux
+      dist: focal
+      env: VIM_VERSION=8.2
+    - name: "Vim 9.0 on Ubuntu"
+      os: linux
+      dist: focal
+      env: VIM_VERSION=9.0
+    - name: "MacVim on macOS"
+      os: osx
+      env: VIM_VERSION=macvim
+    - name: "Neovim on Ubuntu"
+      os: linux
+      dist: focal
+      env: VIM_VERSION=nvim
+
+before_install:
+  - |
+    if [ "$TRAVIS_OS_NAME" = "linux" ]; then
+      sudo apt-get update
+      if [ "$VIM_VERSION" = "nvim" ]; then
+        sudo apt-get install -y neovim
+      else
+        sudo apt-get install -y vim
+      fi
+    elif [ "$TRAVIS_OS_NAME" = "osx" ]; then
+      brew update
+      brew install macvim
+    fi
+  - git clone https://github.com/junegunn/vader.vim.git
+  - git clone https://github.com/thinca/vim-themis.git
+
+install:
+
+  - |
+    mkdir -p ~/.vim/plugin
+    cp travis-notes.vim ~/.vim/plugin/
+    echo "set rtp+=vader.vim" > ~/.vimrc
+    echo "set rtp+=vim-themis" >> ~/.vimrc
+    echo "set rtp+=." >> ~/.vimrc
+
+before_script:
+  - mkdir -p ~/.vim-notes
+  - mkdir -p test
+
+script:
+  - vim -Nc "Vader! test/*.vader" > /dev/null
+  - ./vim-themis/bin/themis --reporter spec
+
+notifications:
+  email:
+    on_success: change
+    on_failure: always
+
+deploy:
+  - provider: releases
+    api_key: $GITHUB_TOKEN
+    file:
+      - travis-notes.vim
+      - README.md
+      - LICENSE
+    skip_cleanup: true
+    on:
+      tags: true
+      condition: $VIM_VERSION = "8.2" && $TRAVIS_OS_NAME = "linux"
+  
+  - provider: script
+    script: ./scripts/deploy-to-vim-org.sh
+    on:
+      tags: true
+      condition: $VIM_VERSION = "8.2" && $TRAVIS_OS_NAME = "linux"
+
+addons:
+  apt:
+    packages:
+      - vim-common
+      - vim-runtime
+
+env:
+  global:
+    - VADER_OUTPUT_FILE=vader_output.txt
+    - VIM_PLUGIN_PATH=$HOME/.vim/plugin
+    - TRAVIS_NOTES_TEST_DIR=$HOME/.vim-notes
