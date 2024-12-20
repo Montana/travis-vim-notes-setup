@@ -45,24 +45,24 @@
 
 **[vim-plug](https://github.com/junegunn/vim-plug)**
 ```vim
-Plug 'mendy/travis-notes.vim'
+Plug 'montana/travis-notes.vim'
 ```
 
 **[Vundle](https://github.com/VundleVim/Vundle.vim)**
 ```vim
-Plugin 'mendy/travis-notes.vim'
+Plugin 'montana/travis-notes.vim'
 ```
 
 **[Pathogen](https://github.com/tpope/vim-pathogen)**
 ```bash
-git clone https://github.com/mendy/travis-notes.vim.git ~/.vim/bundle/travis-notes.vim
+git clone https://github.com/montana/travis-notes.vim.git ~/.vim/bundle/travis-notes.vim
 ```
 
 ### Manual Installation
 
 ```bash
 # Clone the repository
-git clone https://github.com/mendy/travis-notes.vim.git
+git clone https://github.com/montana/travis-notes.vim.git
 
 # Create plugin directory if it doesn't exist
 mkdir -p ~/.vim/plugin
@@ -197,10 +197,6 @@ Contributions make the open source community thrive. Any contributions you make 
 3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
-
-## 📝 License
-
-Distributed under the MIT License. See `LICENSE` for more information.
 
 ## ✍️ Author
 
