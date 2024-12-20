@@ -1,12 +1,14 @@
 # 🔧 travis-notes.vim
+![Notes](https://github.com/user-attachments/assets/08d5c125-93ca-4105-8949-a90e3e68cdef)
 
-<div align="center">
 
 [![Vim Compatible](https://img.shields.io/badge/Vim-8.0%2B-brightgreen.svg)](https://www.vim.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
 
 *A powerful Vim plugin for Travis CI build management and debugging*
+
+
 
 [Installation](#-installation) •
 [Features](#-features) •
@@ -15,6 +17,8 @@
 [Contributing](#-contributing)
 
 </div>
+
+
 
 ---
 
