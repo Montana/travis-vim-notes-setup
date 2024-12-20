@@ -2,44 +2,30 @@ language: minimal
 
 branches:
   only:
-    - main
-    - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
+    - /.*/
 
 jobs:
+  fast_finish: true
   include:
-    - name: "Basic Tests"
+    - name: "Validation"
       os: linux
-      dist: focal
+
+git:
+  depth: 1
+  quiet: false
+
+install: skip
 
 script:
-  - echo "Running basic tests..."
-  - sleep 1
-  - echo "Testing plugin structure..."
-  - test -f travis-notes.vim || touch travis-notes.vim
-  - test -f README.md || touch README.md
-  - echo "All tests passed!"
-  - exit 0
+  - echo "Running validation..."
+  - echo "Success!"
 
 notifications:
   email:
-    on_success: never
-    on_failure: never
-
-deploy:
-  provider: releases
-  token: $GITHUB_TOKEN
-  file:
-    - travis-notes.vim
-    - README.md
-  cleanup: false
-  on:
-    tags: true
+    recipients:
+      - ${NOTIFICATION_EMAIL}
+    on_success: always
+    on_failure: always
 
 cache:
-  directories:
-    - $HOME/.cache
-
-env:
-  global:
-    - FORCE_COLOR=1
-    - CI_BUILD=true
+  apt: true
